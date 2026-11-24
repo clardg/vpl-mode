@@ -1,0 +1,9 @@
+{
+  "name": "vpl-mode",
+  "displayName": "VPL mode",
+  "description": "Working mode for Appetiser Visual Product Leads: phase scope rules, routing, design audits, App Store and Google Play artwork, and read-only Figma checks.",
+  "author": {
+    "name": "Appetiser VPL team"
+  },
+  "keywords": ["design", "figma", "vpl", "app-store", "design-audit"]
+}

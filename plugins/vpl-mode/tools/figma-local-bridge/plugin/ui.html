@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font: 12px/1.4 -apple-system, system-ui, sans-serif; margin: 12px; color: #2e2820; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #bbb; margin-right: 6px; }
+  .on { background: #2fa36b; }
+  .off { background: #d9534f; }
+  .muted { color: #7d6f5a; }
+  #log { margin-top: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style>
+</head>
+<body>
+  <div><span id="dot" class="dot"></span><strong id="status">Connecting…</strong></div>
+  <div id="log" class="muted">Keep this open while Claude edits.</div>
+  <div id="count" class="muted" style="margin-top:4px">0 jobs run</div>
+<script>
+  const BASE = 'http://localhost:7337';
+  const dot = document.getElementById('dot');
+  const statusEl = document.getElementById('status');
+  const logEl = document.getElementById('log');
+  const countEl = document.getElementById('count');
+  const waiting = {};
+  let busy = false, runs = 0;
+
+  function setStatus(on, text) {
+    dot.className = 'dot ' + (on ? 'on' : 'off');
+    statusEl.textContent = text;
+  }
+
+  window.onmessage = (event) => {
+    const msg = event.data.pluginMessage;
+    if (!msg || msg.type !== 'result') return;
+    const done = waiting[msg.id];
+    if (done) { delete waiting[msg.id]; done(msg.payload); }
+  };
+
+  async function tick() {
+    if (busy) return;
+    busy = true;
+    try {
+      const res = await fetch(BASE + '/next');
+      setStatus(true, 'Connected');
+      if (res.status === 200) {
+        const job = await res.json();
+        logEl.textContent = 'Running: ' + (job.description || job.id);
+        const payload = await new Promise((resolve) => {
+          waiting[job.id] = resolve;
+          parent.postMessage({ pluginMessage: { type: 'job', id: job.id, code: job.code } }, '*');
+        });
+        await fetch(BASE + '/result', {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ id: job.id, payload })
+        });
+        runs += 1;
+        countEl.textContent = runs + (runs === 1 ? ' job run' : ' jobs run');
+        logEl.textContent = (payload.ok ? 'Done: ' : 'Error: ') + (job.description || job.id);
+      }
+    } catch (e) {
+      setStatus(false, 'Bridge server not running');
+    } finally {
+      busy = false;
+    }
+  }
+  setInterval(tick, 600);
+  tick();
+</script>
+</body>
+</html>
