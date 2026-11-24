@@ -1,6 +1,6 @@
 ---
 name: app-visual-audit
-description: Run a visual audit (QA of a built app against its Figma HiFi designs) end to end, for any project. Claude installs the build on the iOS Simulator or Android emulator, captures every screen itself, measures differences against the HiFi, builds the audit page in Figma (comparison frames, highlights, comment cards, score), and reports. Also works from a folder of phone screenshots or a live web app. Includes a guided first-time setup for new teammates. Use when someone says "visual audit", "audit <project>", "second audit", "/visual-audit", sends a simulator build, .app zip or Android .apk, drops build screenshots to compare against Figma, or asks how to set up visual audits.
+description: Run a visual audit (QA of a built app against its Figma HiFi designs) end to end, for any project. iOS is automated: Claude installs the build on the iOS Simulator and captures every screen itself. Android works from screenshots the designer takes on a device. Claude then measures differences against the HiFi, builds the audit page in Figma (comparison frames, highlights, comment cards, score), and reports. Also works from a folder of phone screenshots or a live web app. Includes a guided first-time setup for new teammates. Use when someone says "visual audit", "audit <project>", "second audit", "/visual-audit", sends a simulator build or .app zip, drops iOS or Android build screenshots to compare against Figma, or asks how to set up visual audits.
 ---
 
 # App visual audit
@@ -45,7 +45,7 @@ First audit on a project: the audit page needs the team comparison template. If 
 
 ## 2. Capture
 
-Pick the route from what they hand over:
+Pick the route from what they hand over. **iOS: route A (automated). Android: route B (screenshots).** Route D is experimental; use it only when the VPL asks for it.
 
 **A. iOS Simulator build (preferred, fully automatic).** A zipped `.app` from the devs. An `.ipa` or TestFlight build cannot run on the Simulator; if that's what they have, send them `templates/dev-request.md`.
 1. Unzip into the scratchpad. Check `Info.plist`: `DTPlatformName` must be `iphonesimulator`; note `CFBundleIdentifier` and `MinimumOSVersion`.
@@ -57,11 +57,11 @@ Pick the route from what they hand over:
 7. Simulator quirks: typed text is dropped if the field isn't focused yet, and input can lag. Tap the field, type, wait about 2 seconds, screenshot, then tap Continue. Dismiss iOS tips and permission prompts as you meet them.
 8. Optional repeat runs: once Maestro is set up (`SETUP.md` step 9), save the route as a flow (`templates/maestro-flow.yaml`) in the project's audit folder so the next build is captured in one command. Test it on a freshly erased simulator before relying on it.
 
-**B. Folder of phone screenshots** (TestFlight, Firebase or any device). Put them in the capture folder and order them with `python3 <this skill's folder>/scripts/order_screens.py <folder>`; it sorts by capture time and tags iOS, Android and simulator files. Run iOS and Android as separate audits.
+**B. Folder of phone screenshots: the Android route, and iOS when there's no Simulator build** (TestFlight, Firebase or any device). Ask the designer to go through the app on the phone and screenshot every screen, in order, then put them in one folder and say where it is. Put them in the capture folder and order them with `python3 <this skill's folder>/scripts/order_screens.py <folder>`; it sorts by capture time and tags iOS, Android and simulator files. Run iOS and Android as separate audits.
 
 **C. Web app.** Capture the live page in the browser (see `references/method.md`, "Web capture").
 
-**D. Android APK on the emulator (fully automatic).** A plain `.apk` from the devs (staging or debug). A Play Store `.aab` won't install; ask for an APK (`templates/dev-request.md`, Android section). Everything goes through `scripts/android.sh` (call it `A` below), which works in dp, so positions read straight against the HiFi.
+**D. Android APK on the emulator (experimental).** Tested on a few apps but not yet used for a real audit, so Android audits go through route B unless the VPL asks for this. A plain `.apk` from the devs (staging or debug). A Play Store `.aab` won't install; ask for an APK (`templates/dev-request.md`, Android section). Everything goes through `scripts/android.sh` (call it `A` below), which works in dp, so positions read straight against the HiFi.
 1. Copy the APK into the project's audit folder and run `A apk-info <apk>`. It must say "OK on this Mac" (arm64-v8a, universal, or no native code). `A install` prints the package id; note it.
 2. `A create` (once per Mac) makes **Audit_375**: 375x812dp at 3x, the same size as the team template's Android slot. If the project's HiFi uses another width (for example 360x800), make a second phone and note it in the project notes. Captures come out 1126x2436px (the emulator rounds the width to an even number); scale to 375pt wide before measuring, the 1px is not a bug.
 3. `A boot`. The emulator opens in its own window on the Mac, so tell the designer they can watch it there (the simulator panel in the app is iOS only). Then `A install <apk>`, `A statusbar`, `A launch <package>`.

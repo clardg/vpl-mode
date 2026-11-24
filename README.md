@@ -42,9 +42,9 @@ Checks a HiFi page is complete enough to build, at handover or MVP. It walks eve
 **Give it:** the HiFi page link, and the roadmap or wherever the requirements live.
 
 ### app-visual-audit
-Checks a built app against its Figma HiFi. Claude installs the build on the iOS Simulator or Android emulator, goes through the app and screenshots every screen, measures the differences against the HiFi, then builds the audit page in Figma with comparisons, highlights, comments and a score. Also works from a folder of phone screenshots or a live web app. The first run walks you through setting up your Mac (Xcode, the simulator) step by step.
+Checks a built app against its Figma HiFi. **iOS is automated:** Claude installs the build on the iOS Simulator, goes through the app and screenshots every screen. **Android is manual for now:** you screenshot each screen on a phone and Claude takes it from there. Either way, Claude measures the differences against the HiFi and builds the audit page in Figma with comparisons, highlights, comments and a score. Also works for a live web app. The first run walks you through setting up your Mac (Xcode, the simulator) step by step.
 **Say:** "visual audit for <project>"
-**Give it:** a Simulator build (a zipped `.app`) or an Android `.apk` from the devs, and the Figma link. No build yet? It drafts the message asking the devs for one.
+**Give it:** for iOS, a Simulator build (a zipped `.app`) from the devs; for Android, a folder of screenshots. Plus the Figma link. No iOS build yet? It drafts the message asking the devs for one.
 
 ### app-store-artwork
 App Store and Google Play screenshots in Figma, built on a new page in the project's file from real HiFi screens in a device mockup, with headlines in the project's voice and every required size.

@@ -95,9 +95,13 @@ Not needed for your first audit. Maestro lets Claude replay its route through th
 
 ---
 
-## Android setup (only if you audit Android apps)
+## Android
 
-Android builds run on an Android emulator on your Mac, the same way iOS builds run on the iPhone simulator. You don't need Android Studio. Skip steps 2, 3, 6 and 8 above if you only do Android. You need about **8 GB free**.
+Android audits work from screenshots: go through the app on an Android phone, screenshot every screen in order, put them in one folder, and tell Claude where it is. No setup needed.
+
+### Android emulator setup (experimental, optional)
+
+Only if you want to try the automated Android route. Android builds run on an Android emulator on your Mac, the same way iOS builds run on the iPhone simulator. You don't need Android Studio. Skip steps 2, 3, 6 and 8 above if you only do Android. You need about **8 GB free**.
 
 The easy way: in the Code tab type *"Set me up for Android visual audits."* Claude runs all three steps for you; you approve the prompts.
 
@@ -128,7 +132,7 @@ Claude then:
 
 Then review the page and tell Claude what to change ("don't flag X", "remove Y", "that's intended"). It remembers these per project.
 
-For Android, send the `.apk` instead (see Android setup above). For a build you only have on your phone: take screenshots on the device, put them in one folder, and tell Claude where the folder is.
+For Android, take screenshots on the phone, put them in one folder, and tell Claude where the folder is. The same works for any build you only have on your phone.
 
 ## If something goes wrong
 
