@@ -33,7 +33,7 @@ A flag is a short note with the source, then a drafted question to the PM. Don't
 | Design audit: main flows, roadmap coverage, missing flows and states, annotations, variables, components | `vpl-design-audit` ([vpl-design-audit/SKILL.md](../vpl-design-audit/SKILL.md)) |
 | Tickets, what's due, status changes | `clickup-triage` |
 | Figma requests, revisions, comments, responsive, CMS | `figma-rounds` |
-| Visual audit against a build | `app-visual-audit` |
+| Visual audit against a build | `app-visual-audit` ([app-visual-audit/SKILL.md](../app-visual-audit/SKILL.md)) |
 | App Store screenshots | `app-store-artwork` ([app-store-artwork/SKILL.md](../app-store-artwork/SKILL.md)) |
 | Landing page | `landing-page` |
 | Microcopy | `microcopy` |

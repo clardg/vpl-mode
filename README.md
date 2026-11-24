@@ -20,20 +20,32 @@ Or inside Claude Code: `/plugin install vpl-mode --marketplace clardg/vpl-mode`.
 ## First run
 Say "VPL mode". The first time, Claude asks for the blanks in your profile (`~/.claude/vpl-profile.md`): your name, where you keep project notes, and your taste and voice preferences.
 
-## What's in it
-| Part | What it does | Say |
-|---|---|---|
-| **vpl-mode** | Reads your profile and the project's notes, works out the project phase and what's in scope, and sends the task to the right skill. Sets what Claude does alone, what needs your OK, and what it only drafts | "VPL mode" |
-| **vpl-design-audit** | Checks a HiFi page is complete enough to build: main flows, roadmap coverage, missing flows and states, annotations, variables, components. Read-only | "design audit for <project>", "what's missing" |
-| **app-store-artwork** | App Store and Google Play screenshots in Figma, on a new page, from your reference | "App Store artwork for <project>" |
-| **Takeover playbook** | Taking a project over from the product designer. Early, not tested on a real project yet | "I'm taking over <project>" |
-| **Figma checks** | Read-only scripts Claude runs before showing you anything: lint (variables, styles, overlaps, leftovers from copied screens), flow (dead ends, unreachable screens), audit (component use, annotations), artwork (sizes, grid, stretched screens) | Runs on its own |
-| **Font bridge** | Lets Claude edit text in fonts that are only on your Mac | "set up the font bridge" |
+## Skills
+Four skills. Say the phrase in Claude Code and the skill takes it from there.
 
-## What to give Claude
-- **Any task:** the Figma link and the ClickUp ticket. Claude reads the project notes before asking you anything.
-- **Design audit:** the HiFi page link and roadmap access, or say where the requirements live.
-- **App Store artwork:** the project's Figma file, a reference (a Figma link, screenshot, App Store listing or anything the client sent), the request, the screens to feature if the client chose them, App Store or Google Play or both, and whether there's a Watch app. Claude asks for whatever's missing in one message.
+### vpl-mode
+The front door. Claude reads your profile and the project's notes, works out the project phase and what's in scope, and sends each task to the right skill. It also sets what Claude does on its own, what needs your OK, and what it only drafts for you. Includes the takeover playbook for projects handed over from the product designer (early, not tested on a real project yet).
+**Say:** "VPL mode", "I'm taking over <project>"
+**Give it:** the Figma link and the ClickUp ticket.
+
+### vpl-design-audit
+Checks a HiFi page is complete enough to build, at handover or MVP. It walks every main flow end to end, maps the roadmap to the screens, and finds missing flows, missing states (empty, error, loading, edge cases), missing annotations, and screens not built from components or variables. Read-only: it reports and proposes, and changes nothing.
+**Say:** "design audit for <project>", "what's missing"
+**Give it:** the HiFi page link, and the roadmap or wherever the requirements live.
+
+### app-visual-audit
+Checks a built app against its Figma HiFi. Claude installs the build on the iOS Simulator or Android emulator, goes through the app and screenshots every screen, measures the differences against the HiFi, then builds the audit page in Figma with comparisons, highlights, comments and a score. Also works from a folder of phone screenshots or a live web app. The first run walks you through setting up your Mac (Xcode, the simulator) step by step.
+**Say:** "visual audit for <project>"
+**Give it:** a Simulator build (a zipped `.app`) or an Android `.apk` from the devs, and the Figma link. No build yet? It drafts the message asking the devs for one.
+
+### app-store-artwork
+App Store and Google Play screenshots in Figma, built on a new page in the project's file from real HiFi screens in a device mockup, with headlines in the project's voice and every required size.
+**Say:** "App Store artwork for <project>"
+**Give it:** the project's Figma file, a reference (a Figma link, a screenshot, an App Store listing or anything the client sent), the request, the screens to feature if the client chose them, App Store or Google Play or both, and whether there's a Watch app. Claude asks for whatever's missing in one message.
+
+## Also included
+- **Figma checks:** read-only scripts Claude runs before showing you anything. They check variables and styles, overlaps, words left over from copied screens, prototype dead ends and unreachable screens, component use, and artwork sizes and grid.
+- **Font bridge:** lets Claude edit text in fonts that are installed on your Mac but not in Figma's cloud. Only needed for those projects. Say "set up the font bridge".
 
 ## How Claude works with you
 - **Just does:** reads, research, work on duplicates or a new page, and notes.

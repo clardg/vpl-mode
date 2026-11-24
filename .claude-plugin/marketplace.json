@@ -3,12 +3,12 @@
   "owner": {
     "name": "Appetiser VPL team"
   },
-  "description": "VPL mode for Claude Code: the Appetiser VPL process, design audits, App Store and Google Play artwork, and Figma checks.",
+  "description": "VPL mode for Claude Code: the Appetiser VPL process, design audits, visual audits of builds, App Store and Google Play artwork, and Figma checks.",
   "plugins": [
     {
       "name": "vpl-mode",
       "source": "./plugins/vpl-mode",
-      "description": "VPL mode, design audit and App Store / Google Play artwork for Appetiser VPLs, with read-only Figma checks."
+      "description": "VPL mode, design audit, app visual audit and App Store / Google Play artwork for Appetiser VPLs, with read-only Figma checks."
     }
   ]
 }

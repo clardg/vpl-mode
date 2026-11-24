@@ -1,0 +1,17 @@
+# Maestro capture flow starter (optional, for recapturing every new build in one command)
+# Copy to ~/Claude/<Project>/audit/maestro/<project>-audit.yaml and fill in from the first manual run.
+# Run:  maestro test -e EMAIL=... -e PASSWORD=... --test-output-dir <capture folder> <file>
+# Test it on a freshly erased simulator before relying on it. Prefer text or accessibility ids over coordinates.
+appId: com.example.app.dev          # CFBundleIdentifier from the build's Info.plist
+---
+- clearState
+- launchApp
+- takeScreenshot: 01-first-screen
+# - tapOn: "NEXT"
+# - takeScreenshot: 02-next-screen
+# - tapOn: "Continue"                # dismiss iOS tips on a fresh simulator
+# - inputText: ${EMAIL}
+# - tapOn: "CONTINUE"
+# - inputText: ${PASSWORD}
+# - tapOn: "Allow"                   # system notification prompt
+# - takeScreenshot: 10-home
