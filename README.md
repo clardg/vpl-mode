@@ -3,15 +3,23 @@
 A working mode for Appetiser VPLs in Claude Code. You do the thinking that needs a designer and approve the result. Claude does the rest end to end: reading the project, checking the Figma file, building, and checking its own work before you see it.
 
 ## Install
-You need Claude Code. No GitHub account needed.
+Works in Claude Code: in Terminal, or in the **Code** tab of the Claude desktop app. Not in regular Claude chat. No GitHub account needed.
 
-In Terminal:
+Open Terminal and paste these one at a time.
+
+1. Install Claude Code (skip this if typing `claude --version` in Terminal already shows a version):
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+2. Install VPL mode:
 
 ```bash
 claude plugin install vpl-mode --marketplace clardg/vpl-mode
 ```
 
-Or inside Claude Code: `/plugin install vpl-mode --marketplace clardg/vpl-mode`. Then restart Claude Code.
+Then restart Claude, or the Claude desktop app. The skills show up in both. If step 2 says `command not found`, close Terminal, open a new window and try again.
 
 **Updates:** run `claude plugin update vpl-mode@appetiser-vpl`, or turn on auto-update for the `appetiser-vpl` marketplace in `/plugin` so new versions arrive on their own.
 
